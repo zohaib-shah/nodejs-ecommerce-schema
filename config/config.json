@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "node_user",
+    "password": "user123@",
+    "database": "zameen_assessment",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "node_user",
+    "password": "user123@",
+    "database": "zameen_assessment",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "node_user",
+    "password": "user123@",
+    "database": "zameen_assessment",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
