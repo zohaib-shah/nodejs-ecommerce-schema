@@ -8,25 +8,6 @@ const dotenv = require('dotenv');
 const User = models.User;
 dotenv.config();
 
-/* GET users listing. */
-router.get('/',auth, async(req, res, next) => {
-  //return all users 200
-  const users = await User.findAll({});
-  res.status(200).json(users);
-});
-
-router.get('/:id', function(req, res, next) {
-  res.send('resource with id '+req.params.id);
-});
-
-router.put('/:id', function(req, res, next) {
-  res.send('update resource with id '+req.params.id);
-});
-
-router.delete('/:id', function(req, res, next) {
-  res.send('delete resource with id '+req.params.id);
-});
-
 router.post('/', async(req, res, next) => {
   try {
     if(typeof req.body.first_name == "undefined"){
@@ -63,7 +44,6 @@ router.post('/', async(req, res, next) => {
     created_user = await User.create(usr);
     res.status(201).json(created_user);
   } catch(err){
-    console.log(err);
     return res.status(500).json(err);
   }
   
@@ -72,9 +52,8 @@ router.post('/', async(req, res, next) => {
 router.post('/login',async(req,res,next)=>{
 //res.json({"secret":process.env.SECRET});
 const user = await User.findOne({ where : {email : req.body.email }});
-console.log(user);
 if(user){
-  const password_valid = await bcrypt.compare(req.body.password,user.password);
+  const password_valid = await bcrypt.compare(req.body.password,user.hashed_password);
   if(password_valid){
       token = jwt.sign({ "id" : user.id,"email" : user.email,"first_name":user.first_name },process.env.SECRET);
       res.status(200).json({ token : token });
