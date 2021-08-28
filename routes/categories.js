@@ -80,7 +80,7 @@ router.get('/:id', async(req, res, next) => {
             category.parent_id = parent_id;
         }
         category.save();
-  res.status(200).json(category);
+        res.status(200).json(category);
       }  catch(err){
           return res.status(500).json(err);
       }
@@ -124,6 +124,7 @@ router.post('/:category_id/fields/', auth ,async(req,res,next)=>{
         }
         try {
             category_product_field.category_id = category_id;
+            category_product_field.is_active = true;
             await category_product_field.save();
         res.status(201).json(category_product_field);
         } catch(err){
@@ -147,6 +148,44 @@ router.get('/:category_id/fields/:id', async(req, res, next) => {
       }  catch(err){
           return res.status(500).json(err);
       }
+  });
+
+  router.put('/:category_id/fields/:id',auth, async(req, res, next) => {
+    const { category_id , id } = req.params;
+    const category = await Category.findByPk(category_id);
+    const category_product_field = await CategoryProductField.findByPk(id);
+    const { name , type , is_active , placement_areas, show_on_filter } = req.body;
+    try {//check for bad request
+        if(category == null){
+            throw "Category Doesn't exist";
+        }
+        if(category_product_field == null){
+            throw "Category Product field Doesn't exist";
+        }
+    } catch(err){
+        res.status(400).json({"msg":err});
+    }
+    if(name != null){
+        category_product_field.name = name;
+    }
+    if(type != null){
+        category_product_field.type = type;
+    }
+    if(is_active != null){
+        category_product_field.is_active = is_active;
+    }
+    if(placement_areas != null){
+        category_product_field.placement_areas = placement_areas;
+    }
+    if(show_on_filter != null){
+        category_product_field.show_on_filter = show_on_filter;
+    }
+    try {
+        await category_product_field.save();
+        res.status(200).json(category_product_field);
+    } catch(err){
+        res.status(500).json(err);
+    }
   });
 // product field routes ends
 
