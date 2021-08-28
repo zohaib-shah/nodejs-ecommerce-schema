@@ -19,19 +19,6 @@ router.get('/',async(req,res,next)=>{
           return res.status(500).json(err);
       }
 });
-
-router.get('/:category_id/fields/',async(req,res,next)=>{
-    const { category_id } = req.params;
-    try {
-        console.log(category_id);
-      const category_product_fields = await CategoryProductField.findAll({ where :{ category_id : category_id } });
-      console.log(category_product_fields);
-res.status(200).json(category_product_fields);
-    }  catch(err){
-        return res.status(500).json(err);
-    }
-});
-
 router.post('/', auth ,async(req,res,next)=>{
     const { name, sort_order , parent_id } = req.body;
     const category = new Category();
@@ -63,12 +50,13 @@ router.post('/', auth ,async(req,res,next)=>{
 });
 
 router.get('/:id', async(req, res, next) => {
+    const { id } = req.params;
     try {
-        const category = await Category.findByPk(req.params.id);
+        const category = await Category.findByPk(id);
         if(category == null){
             res.status(404).json({"msg":"Not found"});
         }
-  res.status(200).json(category);
+        res.status(200).json(category);
       }  catch(err){
           return res.status(500).json(err);
       }
@@ -97,5 +85,69 @@ router.get('/:id', async(req, res, next) => {
           return res.status(500).json(err);
       }
   });
+
+//   product field routes starts
+router.get('/:category_id/fields/',async(req,res,next)=>{
+    const { category_id } = req.params;
+    try {
+        const category_product_fields = await CategoryProductField.findAll({ where :{ category_id : category_id } });
+      console.log(category_product_fields);
+res.status(200).json(category_product_fields);
+    }  catch(err){
+        return res.status(500).json(err);
+    }
+});
+
+router.post('/:category_id/fields/', auth ,async(req,res,next)=>{
+    const { category_id } = req.params;
+    const { name , type , is_active , placement_areas, show_on_filter } = req.body;
+    const category_product_field = new CategoryProductField();
+    const category = await Category.findByPk(category_id);
+    try {
+        if(name == null){
+            throw "Name of the field required";
+        } else {
+            category_product_field.name = name;
+        }
+        if(type == null){
+            throw "Type of the field required .i.e. string, integer , float";
+        } else {
+            category_product_field.type = type;
+        }
+        if(show_on_filter == null){
+            throw "please tell if you need this field while filtering";
+        } else {
+            category_product_field.show_on_filter = show_on_filter;
+        }
+        if(category == null){
+            throw "Category doesn't exist";
+        }
+        try {
+            category_product_field.category_id = category_id;
+            await category_product_field.save();
+        res.status(201).json(category_product_field);
+        } catch(err){
+            res.status(500).json(err);
+        }
+        
+    } catch(err){
+        res.status(400).json(err);
+    }
+    
+});
+
+router.get('/:category_id/fields/:id', async(req, res, next) => {
+    const { category_id , id } = req.params;
+    try {
+        const category_product_field = await CategoryProductField.findByPk(id);
+        if(category_product_field == null){
+            res.status(404).json({"msg":"Not found"});
+        }
+        res.status(200).json(category_product_field);
+      }  catch(err){
+          return res.status(500).json(err);
+      }
+  });
+// product field routes ends
 
 module.exports = router;
