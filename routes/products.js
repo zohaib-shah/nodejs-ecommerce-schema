@@ -226,4 +226,135 @@ router.put('/:product_id/attributes/:id', auth ,async(req,res,next)=>{
 });
 // product attribute routes end
 
+//   product images routes start
+router.get('/:product_id/images/',async(req,res,next)=>{
+    const { product_id } = req.params;
+    const product = Product.findByPk(product_id);
+    try {
+        if(product == null){
+            throw "Product Not found";
+        }
+    } catch(err){
+        res.status(404).json({"msg":err});//Product not found
+    }
+    try {
+        const product_images = await ProductImage.findAll({ where :{ product_id : product_id } });
+        res.status(200).json(product_images);
+    }  catch(err){
+        return res.status(500).json(err);
+    }
+});
+
+router.get('/:product_id/images/:id', async(req, res, next) => {
+    const { product_id , id } = req.params;
+    const product = Product.findByPk(product_id);
+    try {
+        if(product == null){
+            throw "Product Not found";
+        }
+    } catch(err){
+        res.status(404).json({"msg":err});//Product not found
+    }
+    try {
+        const product_image = await ProductImage.findByPk(id);
+        if(product_image == null){
+            res.status(404).json({"msg":"Image Not found"});
+        }
+        res.status(200).json(product_image);
+      }  catch(err){
+          return res.status(500).json(err);
+      }
+  });
+
+  router.post('/:product_id/images/', auth ,async(req,res,next)=>{
+    const { product_id } = req.params;
+    const { title , alt , slug , url , mime_type } = req.body;
+    const image = new ProductImage();
+    try {
+        if(title == null){
+            throw "title of image required";
+        } else {
+            image.title = title;
+        }
+        if(url == null){
+            throw "URL of image required";
+        } else {
+            image.url = url;
+        }
+        if(alt == null){
+            image.alt = "";
+        } else {
+            image.alt = alt;
+        }
+        if(slug == null){
+            image.slug = "";
+        } else {
+            image.slug = slug;
+        }
+        if(mime_type == null){
+            image.mime_type = "";
+        } else {
+            image.mime_type = mime_type;
+        }
+        
+        const product = await Product.findByPk(product_id);
+        if(product == null){
+            throw "Invalid product id given";
+        }
+        
+        try {
+            image.product_id = product_id;
+            
+            await image.save();
+        res.status(201).json(image);
+        } catch(err){
+            res.status(500).json(err);
+        }
+        
+    } catch(err){
+        res.status(400).json(err);
+    }
+    
+});
+
+router.put('/:product_id/images/:id', auth ,async(req,res,next)=>{
+    const { product_id, id } = req.params;
+    const { title , alt , slug , url , mime_type } = req.body;
+    const image = await ProductImage.findByPk(id);
+    try {
+        if(title != null){
+            image.title = title;
+        }
+        if(alt != null){
+            image.alt = alt;
+        }
+        if(slug != null){
+            image.slug = slug;
+        }
+        if(url != null){
+            image.url = url;
+        }
+        if(mime_type != null){
+            image.mime_type = mime_type;
+        }
+      
+        
+        const product = await Product.findByPk(product_id);
+        if(product == null){
+            throw "Invalid product id given";
+        }
+        try {
+            await image.save();
+        res.status(201).json(attribute);
+        } catch(err){
+            res.status(500).json(err);
+        }
+        
+    } catch(err){
+        res.status(400).json(err);
+    }
+    
+});
+// product images routes end
+
 module.exports = router;
