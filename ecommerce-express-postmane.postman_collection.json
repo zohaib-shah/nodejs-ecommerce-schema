@@ -1,0 +1,743 @@
+{
+	"info": {
+		"_postman_id": "add26bc1-7dbb-47b3-90b8-20cba8c5465e",
+		"name": "ecommerce-express-postmane",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "All Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /users/",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /products/",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Saved Searches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /searches/",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"searches",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Categories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /categories/",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Categories Fields",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /categories/{{category_id}} /fields",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						"{{category_id}} ",
+						"fields"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Product Attributes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /products/{{product_id}} /attributes",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"products",
+						"{{product_id}} ",
+						"attributes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Product Attribute",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\" : \"loremIpsum\",\n    \"category_field_id\" : {{category_field_id}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /products/{{product_id}} /attributes",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"products",
+						"{{product_id}} ",
+						"attributes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Search Attribute",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\" : \"loremIpsum\",\n    \"category_field_id\" : {{category_field_id}},\n    \"operator\" : \"=\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /searches/{{search_id}} /attributes",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"searches",
+						"{{search_id}} ",
+						"attributes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Search Attributes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /searches/{{search_id}} /attributes",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"searches",
+						"{{search_id}} ",
+						"attributes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve a Category Field",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /categories/{{category_id}} /fields/{{category_field_id}} ",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						"{{category_id}} ",
+						"fields",
+						"{{category_field_id}} "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve a Product Attribute",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /products/{{product_id}} /attributes/{{product_attribute_id}}  ",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"products",
+						"{{product_id}} ",
+						"attributes",
+						"{{product_attribute_id}}  "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve a Search Attribute",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /searches/{{search_id}} /attributes/{{search_attribute_id}}  ",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"searches",
+						"{{search_id}} ",
+						"attributes",
+						"{{search_attribute_id}}  "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Category Fields",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"display\",\n    \"type\" : \"string\",\n    \"show_on_filter\" : true\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /categories/{{category_id}} /fields",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						"{{category_id}} ",
+						"fields"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Category Field",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"display\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /categories/{{category_id}} /fields/{{category_field_id}}",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						"{{category_id}} ",
+						"fields",
+						"{{category_field_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product Attribute",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"display\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /products/{{product_id}} /attributes/{{product_attribute_id}} ",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"products",
+						"{{product_id}} ",
+						"attributes",
+						"{{product_attribute_id}} "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Search Attribute",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\" : \"display\",\n    \"category_field_id\" : {{ category_field_id }}\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /searches/{{search_id}} /attributes/{{search_attribute_id}} ",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"searches",
+						"{{search_id}} ",
+						"attributes",
+						"{{search_attribute_id}} "
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Category",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /categories/{{category_id}}",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						"{{category_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}} /products/{{product_id}}",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"products",
+						"{{product_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Category",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"Electronics & Mobiles\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /categories/{{category_id}}",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						"{{category_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Product",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"Product Name\",\n    \"sku\" : \"ANY_IDENTIFIER\",\n    \"description\" : \"Lorem Ipsum\",\n    \"price\" : 289.00,\n    \"unit_price\" : 200.00,\n    \"taxes\" : 89.00\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /products/{{category_id}}",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"products",
+						"{{category_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Saved Search",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category_id\" : {{category_id}},\n    \"user_id\" : {{user_id}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /searches/{{search_id}}",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"searches",
+						"{{search_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Category",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"Accessories\",\n    \"sort_order\" : 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /categories/",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"Product Name\",\n    \"sku\" : \"ANY_IDENTIFIER\",\n    \"description\" : \"Lorem Ipsum\",\n    \"price\" : 289.00,\n    \"unit_price\" : 200.00,\n    \"taxes\" : 89.00\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /products/",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Save Save Search",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category_id\" : {{category_id}},\n    \"user_id\" : {{user_id}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /searches/",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"searches",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\" : \"John\",\n    \"last_name\" : \"Doe\",\n    \"username\" : \"johndoe\",\n    \"email\" : \"john@doe.com\",\n    \"password\" : \"jkOUIY87@\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /users/",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\" : \"john@doe.com\",\n    \"password\" : \"jkOUIY87@\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /users/login",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huQGRvZS5jb20iLCJmaXJzdF9uYW1lIjoiSm9obiIsImlhdCI6MTYzMDE2NDQ2Nn0.PNHp3jQkPAEzmi11JJYN2lnRd65xwNe7sKBavAiABDU"
+		},
+		{
+			"key": "product_id",
+			"value": "1"
+		},
+		{
+			"key": "category_id",
+			"value": "1"
+		},
+		{
+			"key": "search_id",
+			"value": "1"
+		},
+		{
+			"key": "product_attribute_id",
+			"value": "1"
+		},
+		{
+			"key": "search_attribute_id",
+			"value": "1"
+		},
+		{
+			"key": "user_id",
+			"value": "1"
+		},
+		{
+			"key": "product_image_id",
+			"value": "1"
+		},
+		{
+			"key": "host",
+			"value": "127.0.0.1:3000"
+		},
+		{
+			"key": "category_field_id",
+			"value": "1"
+		}
+	]
+}

@@ -8,7 +8,10 @@ const dotenv = require('dotenv');
 const category = require('../models/category');
 const User = models.User;
 const Category = models.Category;
+const Product = models.Product;
+const CategoryProduct = models.CategoryProduct;
 const CategoryProductField = models.CategoryProductField;
+
 dotenv.config();
 
 router.get('/',async(req,res,next)=>{
@@ -188,5 +191,61 @@ router.get('/:category_id/fields/:id', async(req, res, next) => {
     }
   });
 // product field routes ends
+
+// Many to Many relation add for Products
+router.put('/:category_id/products/:product_id',auth, async(req, res, next) => {
+    const { category_id , product_id } = req.params;
+    const category = await Category.findByPk(category_id);
+    const product = await Product.findByPk(product_id);
+    try {
+        if(product == null){
+            throw "Product doesn't exist";
+        }
+        if(category == null){
+            throw "Category doesn't exist";
+        }
+    } catch(err){
+        res.status(400).json({ "msg" : err });
+    }
+    //check if already exists
+    const existingRecords = await CategoryProduct.findAll({ where : { category_id : category_id , product_id : product_id } });
+    try {
+        if(existingRecords.length > 0){
+            throw "Relation already exists";
+        }
+    } catch(err){
+        res.status(422).json({ "msg" : err });
+    }
+    const relation = new CategoryProduct();
+    relation.category_id = category_id;
+    relation.product_id = product_id;
+    await relation.save();
+    res.status(201).json({ "msg" : "Relation Created" });
+
+});
+
+router.delete('/:category_id/products/:product_id',auth, async(req, res, next) => {
+    const { category_id , product_id } = req.params;
+    const category = await Category.findByPk(category_id);
+    const product = await Product.findByPk(product_id);
+    try {
+        if(product == null){
+            throw "Product doesn't exist";
+        }
+        if(category == null){
+            throw "Category doesn't exist";
+        }
+    } catch(err){
+        res.status(400).json({ "msg" : err });
+    }
+    //check if already exists
+    try {
+        await CategoryProduct.destroy({ where : { category_id : category_id , product_id : product_id } });
+    } catch(err){
+        res.status(500).json({ "msg" : err });
+    }
+    res.status(202).json({ "msg" : "Relation Deleted" });
+
+});
 
 module.exports = router;

@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'products' 
       });
       this.hasMany(models.CategoryProductField,{ foreignKey : 'category_id', as : 'available_product_fields' });
+      this.hasMany(models.Search,{ foreignKey : 'category_id', as : 'searches' });
     }
   };
   Category.init({
