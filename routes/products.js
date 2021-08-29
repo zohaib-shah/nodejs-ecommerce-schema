@@ -8,6 +8,8 @@ const dotenv = require('dotenv');
 const category = require('../models/category');
 const User = models.User;
 const Product = models.Product;
+const ProductAttribute = models.ProductAttribute;
+const CategoryProductField = models.CategoryProductField;
 dotenv.config();
 
 router.get('/',async(req,res,next)=>{
@@ -112,5 +114,116 @@ router.get('/:id', async(req, res, next) => {
           return res.status(500).json(err);
       }
   });
+
+//   product attribute routes start
+router.get('/:product_id/attributes/',async(req,res,next)=>{
+    const { product_id } = req.params;
+    const product = Product.findByPk(product_id);
+    try {
+        if(product == null){
+            throw "Product Not found";
+        }
+    } catch(err){
+        res.status(404).json({"msg":err});//Product not found
+    }
+    try {
+        const product_attributes = await ProductAttribute.findAll({ where :{ product_id : product_id } });
+        res.status(200).json(product_attributes);
+    }  catch(err){
+        return res.status(500).json(err);
+    }
+});
+
+router.get('/:product_id/attributes/:id', async(req, res, next) => {
+    const { product_id , id } = req.params;
+    const product = Product.findByPk(product_id);
+    try {
+        if(product == null){
+            throw "Product Not found";
+        }
+    } catch(err){
+        res.status(404).json({"msg":err});//Product not found
+    }
+    try {
+        const product_attribute = await ProductAttribute.findByPk(id);
+        if(product_attribute == null){
+            res.status(404).json({"msg":"Attribute Not found"});
+        }
+        res.status(200).json(product_attribute);
+      }  catch(err){
+          return res.status(500).json(err);
+      }
+  });
+
+  router.post('/:product_id/attributes/', auth ,async(req,res,next)=>{
+    const { product_id } = req.params;
+    const { value , category_field_id } = req.body;
+    const attribute = new ProductAttribute();
+    try {
+        if(value == null){
+            throw "Value of the field required";
+        } else {
+            attribute.value = value;
+        }
+        if(category_field_id == null){
+            throw "Every Product Attribute must belong to it's category field";
+        } else {
+            attribute.category_field_id = category_field_id;
+        }
+        const category_product_field = await CategoryProductField.findByPk(category_field_id);
+        const product = await Product.findByPk(product_id);
+        if(category_product_field == null || product == null){
+            throw "Invalid category field or product id given";
+        }
+        attribute.name = category_product_field.name;//copying attribute name from category field 
+        try {
+            attribute.product_id = product_id;
+            attribute.category_field_id = category_field_id;
+            await attribute.save();
+        res.status(201).json(attribute);
+        } catch(err){
+            res.status(500).json(err);
+        }
+        
+    } catch(err){
+        res.status(400).json(err);
+    }
+    
+});
+
+router.put('/:product_id/attributes/:id', auth ,async(req,res,next)=>{
+    const { product_id, id } = req.params;
+    const { value , category_field_id } = req.body;
+    const attribute = await ProductAttribute.findByPk(id);
+    try {
+        if(value != null){
+            attribute.value = value;
+        }
+        if(category_field_id != null){
+            const category_product_field = await CategoryProductField.findByPk(category_field_id);
+            if(category_product_field == null){
+                throw "Category field doesn't exist";
+            }
+            attribute.name = category_product_field.name;
+            attribute.category_field_id = category_field_id;
+        }
+        
+        const product = await Product.findByPk(product_id);
+        if(product == null){
+            throw "Invalid product id given";
+        }
+        try {
+            await attribute.save();
+        res.status(201).json(attribute);
+        } catch(err){
+            res.status(500).json(err);
+        }
+        
+    } catch(err){
+        res.status(400).json(err);
+    }
+    
+});
+// product attribute routes end
 
 module.exports = router;
