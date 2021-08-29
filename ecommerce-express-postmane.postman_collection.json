@@ -320,6 +320,76 @@
 			"response": []
 		},
 		{
+			"name": "Create Category Product Relation",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /categories/{{category_id}} /products/{{product_id}}",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						"{{category_id}} ",
+						"products",
+						"{{product_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Category Product Relation",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}} /categories/{{category_id}} /products/{{product_id}}",
+					"host": [
+						"{{host}} "
+					],
+					"path": [
+						"categories",
+						"{{category_id}} ",
+						"products",
+						"{{product_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Update Product Attribute",
 			"request": {
 				"method": "PUT",
